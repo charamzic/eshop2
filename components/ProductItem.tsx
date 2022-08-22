@@ -2,6 +2,7 @@ import React from 'react';
 import Image from "next/image";
 import Button from "@mui/material/Button";
 import {Card, Grid, Typography} from "@mui/material";
+import {useStoreCartContext} from "../context/StoreCartContext";
 
 type ProductItemProps = {
     name: string
@@ -15,7 +16,9 @@ type Price = {
     currency: string
 }
 
-const ProductItem = ({name, image, price}: ProductItemProps) => {
+const ProductItem = ({name, id, image, price}: ProductItemProps) => {
+    const { getItemQuantity, increaseCartQuantity, decreaseCartQuantity, removeFromCart } = useStoreCartContext()
+    const quantity = getItemQuantity(id);
     return (
         <Card>
             <Grid container flexDirection={"column"} justifyContent={"space-between"} alignItems={"center"} width={250} height={300}>
@@ -39,20 +42,29 @@ const ProductItem = ({name, image, price}: ProductItemProps) => {
                     </Typography>
                 </Grid>
 
-
-                <Grid container flexDirection={"row"} justifyContent={"space-between"} padding={1}>
-                    <Grid item>
-                        <Button variant="outlined">-</Button>
-                    </Grid>
-                    <Grid item>
-                        <Typography gutterBottom variant="h6" component="div">
-                            Count
-                        </Typography>
-                    </Grid>
-                    <Grid item>
-                        <Button variant="outlined">+</Button>
-                    </Grid>
-                </Grid>
+                {quantity === 0 ? (
+                        <Grid container justifyContent={"center"} padding={1}>
+                            <Grid item>
+                                <Button variant="outlined" onClick={() => increaseCartQuantity(id)}>Add to cart</Button>
+                            </Grid>
+                        </Grid>
+                    ) :
+                    <>
+                        <Grid container flexDirection={"row"} justifyContent={"space-between"} padding={1}>
+                            <Grid item>
+                                <Button variant="outlined" onClick={() => decreaseCartQuantity(id)}>-</Button>
+                            </Grid>
+                            <Grid item>
+                                <Typography gutterBottom variant="h6" component="div">
+                                    {quantity}
+                                </Typography>
+                            </Grid>
+                            <Grid item>
+                                <Button variant="outlined" onClick={() => increaseCartQuantity(id)}>+</Button>
+                            </Grid>
+                        </Grid>
+                    </>
+                }
             </Grid>
         </Card>
     );
