@@ -24,7 +24,7 @@ const ProductItem = ({name, id, image, price}: ProductItemProps) => {
             <Grid container flexDirection={"column"} justifyContent={"space-between"} alignItems={"center"} width={250} height={300}>
                 <Grid item>
                     <Image src={image}
-                           alt="Picture of the author"
+                           alt="Picture of the product"
                            width={128}
                            height={128}
                            objectFit={"contain"}/>

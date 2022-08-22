@@ -8,6 +8,7 @@ import Typography from '@mui/material/Typography';
 import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
 import Cart from '@mui/icons-material/ShoppingCart';
+import {useStoreCartContext} from "../context/StoreCartContext";
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -52,6 +53,8 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function SearchAppBar() {
+    const { openCart, cartQuantity} = useStoreCartContext()
+
     return (
         <Box sx={{ flexGrow: 1 }}>
             <AppBar position="static">
@@ -65,6 +68,7 @@ export default function SearchAppBar() {
                         Home
                     </Typography>
                     <IconButton
+                        onClick={openCart}
                         size="large"
                         edge="start"
                         color="inherit"
