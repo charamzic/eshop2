@@ -68,7 +68,7 @@ export default function SearchAppBar(props: { setFilterInput: (arg0: string) => 
                         component="div"
                         sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
                     >
-                        Home
+                        Banánashop
                     </Typography>
                     <IconButton
                         onClick={openCart}
