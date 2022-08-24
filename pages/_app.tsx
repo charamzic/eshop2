@@ -6,6 +6,7 @@ import {CartProvider} from "../context/StoreCartContext";
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
     const [isSSR, setIsSSR] = useState(true);
+    const [filterInput, setFilterInput] = useState<string>("");
 
     useEffect(() => {
         return () => {
@@ -17,7 +18,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
 
     return (
         <CartProvider>
-            <Navbar />
+            <Navbar setFilterInput={setFilterInput} />
             <Component {...pageProps} />
         </CartProvider>
 
