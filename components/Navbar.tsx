@@ -8,7 +8,7 @@ import Typography from '@mui/material/Typography';
 import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
 import Cart from '@mui/icons-material/ShoppingCart';
-import {useStoreCartContext} from "../context/StoreCartContext";
+import {useCartContext} from "../context/CartContext";
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -53,7 +53,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function SearchAppBar(props: { setFilterInput: (arg0: string) => void }) {
-    const { openCart, cartQuantity} = useStoreCartContext();
+    const { openCart, cartQuantity} = useCartContext();
     function handleChange(event: { target: { value: string } }) {
         props.setFilterInput(event.target.value);
     }

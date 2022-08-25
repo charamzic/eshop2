@@ -1,19 +1,18 @@
 import React from 'react';
-import {useStoreCartContext} from "../context/StoreCartContext";
-import products from '../data/products.json'
+import {useCartContext} from "../context/CartContext";
 import {Stack, Typography} from "@mui/material";
 import Image from "next/image";
 import Button from "@mui/material/Button";
+// import products from '../data/products.json'
 
 type CartItemProps = {
     id: number
     quantity: number
 }
 
-
 const CartItem = ({id, quantity}: CartItemProps) => {
-    const {removeFromCart} = useStoreCartContext()
-    const item = products.find(item => item.id === id)
+    const {removeFromCart, products} = useCartContext()
+    const item = products?.find(item => item.id === id)
     if (item == null) return null
 
     return (

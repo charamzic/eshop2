@@ -1,12 +1,27 @@
 import {createContext, ReactNode, useContext, useState} from "react";
-import StoreCart from "../components/StoreCart";
+import Cart from "../components/Cart";
 import {useLocalStorage} from "../hooks/useLocalStorage";
+import {GetStaticProps, InferGetStaticPropsType} from "next";
 
-type StoreCartProps = {
+
+export const getStaticProps: GetStaticProps = async () => {
+    const res = await fetch("http://localhost:3000/api/hello");
+    const data: Product[] = await res.json()
+
+    console.log(data)
+
+    return {
+        props: {
+            products: data,
+        },
+    }
+}
+
+type CartProps = {
     children: ReactNode
 }
 
-type StoreCartContext = {
+type CartContext = {
     openCart: () => void
     closeCart: () => void
     getItemQuantity: (id: number) => number
@@ -15,6 +30,7 @@ type StoreCartContext = {
     removeFromCart: (id: number) => void
     cartQuantity: number
     cartItems: CartItem[]
+    products: Product[]
 }
 
 type CartItem = {
@@ -22,18 +38,30 @@ type CartItem = {
     quantity: number
 }
 
-const StoreCartContext = createContext({} as StoreCartContext)
-
-export function useStoreCartContext() {
-    return useContext(StoreCartContext);
+type Product = {
+    name: string
+    id: number
+    image: string
+    price: {
+        full: number
+        currency: string
+    }
 }
 
-export function CartProvider({children}: StoreCartProps) {
+const CartContext = createContext({} as CartContext)
+
+export function useCartContext() {
+    return useContext(CartContext);
+}
+
+export function CartProvider({children}: CartProps, {products}: InferGetStaticPropsType<typeof getStaticProps>) {
     const [isOpen, setIsOpen] = useState(false)
     const [cartItems, setCartItems] = useLocalStorage<CartItem[]>('cart', [])
     const cartQuantity = cartItems.reduce((quantity, item) => item.quantity + quantity, 0)
     const openCart = () => setIsOpen(true)
     const closeCart = () => setIsOpen(false)
+
+    console.log(products)
 
     function getItemQuantity(id:number) {
         return cartItems.find(item => item.id === id)?.quantity || 0
@@ -78,7 +106,7 @@ export function CartProvider({children}: StoreCartProps) {
     }
 
     return (
-        <StoreCartContext.Provider
+        <CartContext.Provider
             value={{
                 getItemQuantity,
                 increaseCartQuantity,
@@ -87,11 +115,12 @@ export function CartProvider({children}: StoreCartProps) {
                 openCart,
                 closeCart,
                 cartItems,
-                cartQuantity
+                cartQuantity,
+                products
             }}
         >
             {children}
-            <StoreCart isOpen={isOpen}/>
-        </StoreCartContext.Provider>
+            <Cart isOpen={isOpen}/>
+        </CartContext.Provider>
     )
 }

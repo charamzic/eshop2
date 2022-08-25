@@ -1,6 +1,6 @@
 import React from 'react';
 import Drawer from '@mui/material/Drawer';
-import {useStoreCartContext} from "../context/StoreCartContext";
+import {useCartContext} from "../context/CartContext";
 import { styled, useTheme } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
@@ -9,7 +9,6 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import {Stack} from "@mui/material";
 import CartItem from "./CartItem";
-import products from "../data/products.json";
 
 const drawerWidth = 240;
 
@@ -45,8 +44,8 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 }));
 
 
-const StoreCart = ({isOpen}: StoreCartProps) => {
-    const {closeCart, cartItems} = useStoreCartContext()
+const Cart = ({isOpen}: StoreCartProps) => {
+    const {closeCart, cartItems, products} = useCartContext()
     const theme = useTheme();
     return (
         <Drawer
@@ -78,7 +77,7 @@ const StoreCart = ({isOpen}: StoreCartProps) => {
                     </Typography>
                     <Typography variant={"h6"} textAlign={"right"} paddingTop={3}>
                         {cartItems.reduce((total, cartItem) => {
-                            const item = products.find(item => item.id === cartItem.id)
+                            const item = products?.find(item => item.id === cartItem.id)
                             return total + (item?.price.full || 0) * cartItem.quantity}, 0).toFixed(2)}
                         Kč
                     </Typography>
@@ -89,4 +88,4 @@ const StoreCart = ({isOpen}: StoreCartProps) => {
     );
 };
 
-export default StoreCart;
+export default Cart;

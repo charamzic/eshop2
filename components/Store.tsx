@@ -1,11 +1,13 @@
-import products from '../data/products.json' // pak to fetchnout
 import React, {useState} from 'react';
+import {useCartContext} from "../context/CartContext";
 import Grid from "@mui/material/Grid";
-import ProductItem from "./ProductItem";
+import Product from "./Product";
 import Navbar from "./Navbar";
 
 const Store = () => {
     const [filterInput, setFilterInput] = useState<string>("");
+    const {products} = useCartContext()
+
     return (
         <>
             <Navbar setFilterInput={setFilterInput} />
@@ -14,7 +16,7 @@ const Store = () => {
                   spacing={3}
 
             >
-                {products.filter((val) => {
+                {products?.filter((val) => {
                     if (filterInput == "") {
                         return val;
                     } else if (val.name.toLowerCase().includes(filterInput.toLowerCase())) {
@@ -22,7 +24,7 @@ const Store = () => {
                     }
                 }).map(item => (
                     <Grid key={item.id} item>
-                        <ProductItem  {...item} />
+                        <Product  {...item} />
                     </Grid>
                 ))}
             </Grid>

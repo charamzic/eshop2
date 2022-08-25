@@ -2,7 +2,7 @@ import React from 'react';
 import Image from "next/image";
 import Button from "@mui/material/Button";
 import {Card, Grid, Typography} from "@mui/material";
-import {useStoreCartContext} from "../context/StoreCartContext";
+import {useCartContext} from "../context/CartContext";
 
 type ProductItemProps = {
     name: string
@@ -16,8 +16,8 @@ type Price = {
     currency: string
 }
 
-const ProductItem = ({name, id, image, price}: ProductItemProps) => {
-    const { getItemQuantity, increaseCartQuantity, decreaseCartQuantity, removeFromCart } = useStoreCartContext()
+const Product = ({name, id, image, price}: ProductItemProps) => {
+    const { getItemQuantity, increaseCartQuantity, decreaseCartQuantity, removeFromCart } = useCartContext()
     const quantity = getItemQuantity(id);
     return (
         <Card>
@@ -70,4 +70,4 @@ const ProductItem = ({name, id, image, price}: ProductItemProps) => {
     );
 };
 
-export default ProductItem;
+export default Product;
