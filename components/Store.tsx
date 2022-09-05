@@ -1,5 +1,4 @@
 import React, {useState} from 'react';
-import {useCartContext} from "../context/CartContext";
 import Grid from "@mui/material/Grid";
 import Product from "./Product";
 import Navbar from "./Navbar";
@@ -7,7 +6,6 @@ import products from "../public/products.json";
 
 const Store = () => {
     const [filterInput, setFilterInput] = useState<string>("");
-    // const {products} = useCartContext()
 
     return (
         <>

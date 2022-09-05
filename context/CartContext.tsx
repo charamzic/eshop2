@@ -1,7 +1,6 @@
 import {createContext, ReactNode, useContext, useState} from "react";
 import Cart from "../components/Cart";
 import {useLocalStorage} from "../hooks/useLocalStorage";
-import {GetStaticProps, InferGetStaticPropsType} from "next";
 
 
 type CartProps = {
@@ -22,16 +21,6 @@ type CartContext = {
 type CartItem = {
     id: number
     quantity: number
-}
-
-type Product = {
-    name: string
-    id: number
-    image: string
-    price: {
-        full: number
-        currency: string
-    }
 }
 
 const CartContext = createContext({} as CartContext)

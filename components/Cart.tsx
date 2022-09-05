@@ -9,6 +9,7 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import {Stack} from "@mui/material";
 import CartItem from "./CartItem";
+import products from "../public/products.json";
 
 const drawerWidth = 240;
 
@@ -45,7 +46,7 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 
 
 const Cart = ({isOpen}: StoreCartProps) => {
-    const {closeCart, cartItems, products} = useCartContext()
+    const {closeCart, cartItems} = useCartContext()
     const theme = useTheme();
     return (
         <Drawer
