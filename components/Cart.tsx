@@ -10,6 +10,7 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import {Stack} from "@mui/material";
 import CartItem from "./CartItem";
 import products from "../public/products.json";
+// import {ProductItemProps} from "./Product";
 
 const drawerWidth = 240;
 

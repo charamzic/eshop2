@@ -4,7 +4,7 @@ import Button from "@mui/material/Button";
 import {Card, Grid, Typography} from "@mui/material";
 import {useCartContext} from "../context/CartContext";
 
-type ProductItemProps = {
+export type ProductItemProps = {
     name: string
     id: number
     image: string

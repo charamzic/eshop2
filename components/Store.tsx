@@ -1,11 +1,32 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Grid from "@mui/material/Grid";
 import Product from "./Product";
 import Navbar from "./Navbar";
-import products from "../public/products.json";
+import {ProductItemProps} from "./Product";
 
 const Store = () => {
     const [filterInput, setFilterInput] = useState<string>("");
+    const [products, setProducts] = useState<ProductItemProps[]>([]);
+
+    function getProducts() {
+        fetch("products.json", {
+            headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json",
+            },
+        })
+            .then(function (response) {
+                return response.json();
+            })
+            .then(function (json: ProductItemProps[]) {
+                setProducts(json);
+            });
+    }
+
+    useEffect(() => {
+        getProducts();
+    }, []);
+
 
     return (
         <>
