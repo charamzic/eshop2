@@ -3,7 +3,7 @@ import {useCartContext} from "../context/CartContext";
 import {Stack, Typography} from "@mui/material";
 import Image from "next/image";
 import Button from "@mui/material/Button";
-// import products from '../data/products.json'
+import products from '../public/products.json'
 
 type CartItemProps = {
     id: number
@@ -11,7 +11,7 @@ type CartItemProps = {
 }
 
 const CartItem = ({id, quantity}: CartItemProps) => {
-    const {removeFromCart, products} = useCartContext()
+    const {removeFromCart} = useCartContext()
     const item = products?.find(item => item.id === id)
     if (item == null) return null
 

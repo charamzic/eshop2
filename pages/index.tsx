@@ -19,6 +19,4 @@ const Home: NextPage = () => {
     )
 }
 
-// reset
-
 export default Home

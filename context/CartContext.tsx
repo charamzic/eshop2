@@ -4,19 +4,6 @@ import {useLocalStorage} from "../hooks/useLocalStorage";
 import {GetStaticProps, InferGetStaticPropsType} from "next";
 
 
-export const getStaticProps: GetStaticProps = async () => {
-    const res = await fetch("http://localhost:3000/api/hello");
-    const data: Product[] = await res.json()
-
-    console.log(data)
-
-    return {
-        props: {
-            products: data,
-        },
-    }
-}
-
 type CartProps = {
     children: ReactNode
 }
@@ -30,7 +17,6 @@ type CartContext = {
     removeFromCart: (id: number) => void
     cartQuantity: number
     cartItems: CartItem[]
-    products: Product[]
 }
 
 type CartItem = {
@@ -54,14 +40,12 @@ export function useCartContext() {
     return useContext(CartContext);
 }
 
-export function CartProvider({children}: CartProps, {products}: InferGetStaticPropsType<typeof getStaticProps>) {
+export function CartProvider({children}: CartProps) {
     const [isOpen, setIsOpen] = useState(false)
     const [cartItems, setCartItems] = useLocalStorage<CartItem[]>('cart', [])
     const cartQuantity = cartItems.reduce((quantity, item) => item.quantity + quantity, 0)
     const openCart = () => setIsOpen(true)
     const closeCart = () => setIsOpen(false)
-
-    console.log(products)
 
     function getItemQuantity(id:number) {
         return cartItems.find(item => item.id === id)?.quantity || 0
@@ -115,8 +99,7 @@ export function CartProvider({children}: CartProps, {products}: InferGetStaticPr
                 openCart,
                 closeCart,
                 cartItems,
-                cartQuantity,
-                products
+                cartQuantity
             }}
         >
             {children}
